@@ -1,6 +1,0 @@
-projectKey=p-1
-serverUrl=http://165.232.180.198:9000
-serverVersion=10.6.0.92116
-dashboardUrl=http://165.232.180.198:9000/dashboard?id=p-1
-ceTaskId=487c6b13-ccc9-487d-a4f4-d36c1b285525
-ceTaskUrl=http://165.232.180.198:9000/api/ce/task?id=487c6b13-ccc9-487d-a4f4-d36c1b285525
