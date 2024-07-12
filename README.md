@@ -1,2 +1,1 @@
-# springboot-java-poject
-springboot-java-poject
+# springboot-maven-course-micro-svc
