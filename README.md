@@ -47,3 +47,112 @@ Jenkins Dashboard >> Manage Jenkins >> Credentials >> System >> Global credentia
 2. configure webhook using jenkins URL 
 
 ![image](https://github.com/user-attachments/assets/72f96fc5-774e-4c22-b60b-a8e76742f045)
+
+### Jenkins Pipeline 
+
+```
+pipeline {
+    agent any
+    
+    tools {
+        maven 'M2'
+    }
+    
+    //create environment to call it in the variable later globally//
+    environment {
+        registry_credentials = "docker-cred" //docker registry credentials configured in jenkins//
+        sonarqube_credentials = "sq-1" //sonarqube credentials configured at jenkins//
+        docker_registry = "anand40090/spring-boot-demo" //docker registery configured//
+    }
+
+    stages {
+        stage('Git Pull') {
+            steps {
+                git branch: 'master', changelog: false, poll: false, url: 'https://github.com/anand40090/springboot-java-poject.git'
+            }
+        }
+        stage('maven image build'){
+            steps{
+                sh 'mvn clean install'
+            }
+        }
+        stage('Sonar Scan'){
+            steps{
+                withSonarQubeEnv(credentialsId: 'sq-1', installationName: 'sq-1'){
+                    sh 'mvn sonar:sonar'
+                }
+                waitForQualityGate abortPipeline: false, credentialsId: 'sq-1'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    def imageName = "${docker_registry}:${BUILD_NUMBER}" //create variable for docker image//
+                    sh "docker build -t ${imageName} ."
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    def imageName = "${docker_registry}:${BUILD_NUMBER}"
+                    withCredentials([usernamePassword(credentialsId: "${registry_credentials}", passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                        sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
+                        sh "docker push ${imageName}"
+                    }
+                }
+            }
+        }
+        stage('Stop and Remove Previous Container') {
+            steps {
+                script {
+                    def previousContainer = sh(script: "docker ps -aqf name=spring-boot-demo-", returnStdout: true).trim()
+                    if (previousContainer) {
+                        sh "docker stop ${previousContainer}"
+                        sh "docker rm ${previousContainer}"
+                    }
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    def imageName = "${docker_registry}:${BUILD_NUMBER}"
+                    sh "docker run -itd -p 1244:8080 --name spring-boot-demo-${BUILD_NUMBER} ${imageName}"
+                }
+            }
+        }
+        stage('check container'){
+            steps{
+                sh 'docker ps '
+            }
+        }
+    }
+}
+
+```
+
+### Jenkins stages
+
+![image](https://github.com/user-attachments/assets/c47490db-f204-4ddf-b97b-137e2a12043c)
+
+### Sonarqube code scan result 
+
+![image](https://github.com/user-attachments/assets/d603b763-f0bb-4425-9dc3-f181c7d77989)
+
+### Docker images pushed to dockerhub as per the jenkins build number 
+
+![image](https://github.com/user-attachments/assets/24dadd8e-65f7-4ed6-b250-430d7ab36fc8)
+
+### Docker container started as per the jenkins stage 'Run Docker Container'
+
+![image](https://github.com/user-attachments/assets/a9f89562-deca-4cac-ab76-e45dd07309c4)
+
+### Docker container accessible on the defined port 1244 
+
+![image](https://github.com/user-attachments/assets/6c455aae-e97f-4af3-bbe2-0c9611696ca3)
+
+
