@@ -1,5 +1,3 @@
-# CI-CD end to end pieline using maven, docker
---------------
 # Jenkins CI-CD pipeline using docker, maven
 
 ________________
