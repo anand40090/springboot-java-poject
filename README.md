@@ -16,8 +16,9 @@ _______________
    - Maven
    - JDK
 2. Configure the tools in Jenkins
-3. Create tocken for Sonarqube and configure it's in jenkins 
+3. Create token for Sonarqube and configure it in jenkins 
 4. Configure docker credentials in jenkins
+5. Create webhook in sonarqube
 
 _________________________
 
