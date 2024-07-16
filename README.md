@@ -17,7 +17,85 @@ _______________
 3. Create token for Sonarqube and configure it in jenkins 
 4. Configure docker credentials in jenkins
 5. Create webhook in sonarqube
+-----------------------
 
+## Install sonarqube using docker compose 
+
+Using a Docker container to run SonarQube can simplify the setup process significantly. 
+Below are the steps to install and run SonarQube using Docker on Ubuntu.
+
+### Prerequisites - 
+
+1.  Install Docker 
+```
+sudo apt update
+sudo apt install docker.io
+sudo systemctl start docker
+sudo systemctl enable docker
+
+```
+2. Install Docker Compose:
+
+```
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+```
+
+### Set Up SonarQube with Docker
+
+1. Create a Docker Compose file:
+Create a directory for SonarQube and a Docker Compose file:
+
+```
+mkdir sonarqube-docker
+cd sonarqube-docker
+nano docker-compose.yml
+
+```
+
+2.  Edit the docker-compose.yml file:
+Add the following content to the docker-compose.yml file:
+```
+version: "3"
+services:
+  sonarqube:
+    image: sonarqube:latest
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_JDBC_URL=jdbc:postgresql://db:5432/sonarqube
+      - SONAR_JDBC_USERNAME=sonar
+      - SONAR_JDBC_PASSWORD=sonar
+    depends_on:
+      - db
+  db:
+    image: postgres:latest
+    container_name: sonarqube-db
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar
+      - POSTGRES_DB=sonarqube
+    volumes:
+      - "sonarqube_db_data:/var/lib/postgresql/data"
+volumes:
+  sonarqube_db_data:
+
+```
+
+3. Run Docker Compose:
+
+```
+sudo docker-compose up -d
+
+```
+
+### Access SonarQube
+
+1. Open a web browser and go to http://your_server_ip:9000.
+
+2. Log in with the default username and password (admin/admin).
 _________________________
 
 # Configure the tools, credentials in jenkins 
