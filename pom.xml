@@ -70,12 +70,12 @@
 
         </plugins>
     </build>
-     <repositoty>
+     <repository>
               <url>http://65.0.7.66:8081/repository/maven-releases/</url>
      </repository>   
-     <snapshotRepositoty>
+     <snapshotRepository>
               <url>http://65.0.7.66:8081/repository/maven-snapshots/</url>
-     </snapshotRepositoty>       
+     </snapshotRepository>       
 
 
 </project>
