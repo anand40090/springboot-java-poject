@@ -70,12 +70,33 @@
 
         </plugins>
     </build>
-     <repository>
-              <url>http://65.0.7.66:8081/repository/maven-releases/</url>
-     </repository>   
-     <snapshotRepository>
-              <url>http://65.0.7.66:8081/repository/maven-snapshots/</url>
-     </snapshotRepository>       
+     <repositories>
+    <!-- Release repository for stable artifacts -->
+    <repository>
+      <id>nexus-releases</id>
+      <url>http://65.0.7.66:8081/repository/maven-releases/</url>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+
+    <!-- Snapshot repository for in-progress artifacts -->
+    <repository>
+      <id>nexus-snapshots</id>
+      <url>http://65.0.7.66:8081/repository/maven-snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
 
 
 </project>
