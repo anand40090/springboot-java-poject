@@ -70,4 +70,16 @@
 
         </plugins>
     </build>
+          <distributionManagement>
+    <repository>
+      <!-- Repository for released artifacts -->
+      <id>nexus-releases</id>
+      <url>http://65.0.7.66:8081/repository/maven-releases/</url>
+    </repository>
+    <snapshotRepository>
+      <!-- Repository for snapshot artifacts -->
+      <id>nexus-snapshots</id>
+      <url>http://65.0.7.66:8081/repository/maven-snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
 </project>
