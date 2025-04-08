@@ -73,7 +73,7 @@
           <distributionManagement>
     <repository>
       <!-- Repository for released artifacts -->
-      <id>nexus-releases</id>
+      <id>mvn</id>
       <url>http://3.110.41.60:8081/repository/maven-releases/</url>
     </repository>
     <snapshotRepository>
