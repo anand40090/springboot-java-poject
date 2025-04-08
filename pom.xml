@@ -73,12 +73,12 @@
           <distributionManagement>
     <repository>
       <!-- Repository for released artifacts -->
-      <id>mvn</id>
-      <url>http://3.110.41.60:8081/repository/mvn/</url>
+      <id>maven-releases</id>
+      <url>http://3.110.41.60:8081/repository/maven-releases/</url>
     </repository>
     <snapshotRepository>
       <!-- Repository for snapshot artifacts -->
-      <id>nexus-snapshots</id>
+      <id>/maven-snapshots</id>
       <url>http://3.110.41.60:8081/repository/maven-snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
