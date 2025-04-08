@@ -74,12 +74,12 @@
     <repository>
       <!-- Repository for released artifacts -->
       <id>nexus-releases</id>
-      <url>http://13.233.96.224:8081/repository/maven-releases/</url>
+      <url>http://43.204.231.70:8081/repository/maven-releases/</url>
     </repository>
     <snapshotRepository>
       <!-- Repository for snapshot artifacts -->
       <id>nexus-snapshots</id>
-      <url>http://13.233.96.224:8081/repository/maven-snapshots/</url>
+      <url>http://43.204.231.70:8081/repository/maven-snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
 </project>
