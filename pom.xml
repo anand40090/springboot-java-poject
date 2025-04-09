@@ -80,9 +80,4 @@
         <url>http://3.108.235.219:8081/repository/maven-snapshots/</url>
     </snapshotRepository>
 </distributionManagement>
-
-<properties>
-    <!-- Specify version -->
-    <maven.deploy.skip>false</maven.deploy.skip>
-</properties>
 </project>
